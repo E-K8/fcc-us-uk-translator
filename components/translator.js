@@ -15,6 +15,14 @@ class Translator {
 
       translatedText = translatedText.replace(regex, `${britishWord}`);
     }
+
+    // American to British spellings
+    for (const [americanSpelling, britishSpelling] of Object.entries(
+      americanToBritishSpelling
+    )) {
+      const regex = new RegExp(`\\b${americanSpelling}\\b`, 'gi');
+      translatedText = translatedText.replace(regex, `${britishSpelling}`);
+    }
     return translatedText;
   }
   translateToAmerican(text) {
