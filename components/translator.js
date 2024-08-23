@@ -23,6 +23,15 @@ class Translator {
       const regex = new RegExp(`\\b${americanSpelling}\\b`, 'gi');
       translatedText = translatedText.replace(regex, `${britishSpelling}`);
     }
+
+    // American to British tltles
+    for (const [americanTitles, britishTitles] of Object.entries(
+      americanToBritishTitles
+    )) {
+      const regex = new RegExp(`\\b${americanTitle}`, 'gi'); // Titles might not be whole words (e.g., Mr.);
+      translatedText = translatedText.replace(regex, `${britishTitles}`);
+    }
+
     return translatedText;
   }
   translateToAmerican(text) {
