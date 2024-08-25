@@ -34,6 +34,7 @@ class Translator {
 
     return translatedText;
   }
+
   translateToAmerican(text) {
     let translatedText = text;
 
@@ -43,7 +44,13 @@ class Translator {
 
       translatedText = translatedText.replace(regex, `${americanWord}`);
     }
-    return translatedText;
+
+    // British to American spellings
+    for (const [americanSpelling, britishSpelling] of Object.entries(
+      americanToBritishSpelling
+    )) {
+      const regex = new RegExp(`\\b${britishSpelling}\\b`, 'gi');
+    }
   }
 }
 
