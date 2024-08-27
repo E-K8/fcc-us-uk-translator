@@ -4,7 +4,8 @@ const Translator = require('./components/translator');
 const translator = new Translator();
 
 const textAm = 'I need vacay and some fries';
-const textBr = 'There is a car park at the back';
+const textBr =
+  'There is a car park at the back, get mr Bean to bring an aluminium can.';
 const translatedToBritish = translator.translateToBritish(textAm);
 const translatedToAmerican = translator.translateToAmerican(textBr);
 

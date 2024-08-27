@@ -6,6 +6,14 @@ const britishOnly = require('./british-only.js');
 class Translator {
   constructor() {}
 
+  _reverseMap(obj) {
+    const result = {};
+    for (const key in obj) {
+      result[obj[key]] = key;
+    }
+    return result;
+  }
+
   translateToBritish(text) {
     let translatedText = text;
 
@@ -53,6 +61,13 @@ class Translator {
       translatedText = translatedText.replace(regex, `${americanSpelling}`);
     }
 
+    // British to American titles
+    for (const [britishTitle, americanTitle] of Object.entries(
+      this._reverseMap(americanToBritishTitles)
+    )) {
+      const regex = new RegExp(`\\b${britishTitle}`, 'gi');
+      translatedText = translatedText.replace(regex, `${americanTitle}`);
+    }
     return translatedText;
   }
 }
