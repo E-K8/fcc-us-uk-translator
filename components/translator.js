@@ -4,7 +4,26 @@ const americanToBritishTitles = require('./american-to-british-titles.js');
 const britishOnly = require('./british-only.js');
 
 class Translator {
-  constructor() {}
+  constructor() {
+    this.americanToBritishTitlesMap = this._toTitleCaseMap(
+      americanToBritishTitles
+    );
+    this.britishToAmericanTitlesMap = this._reverseMap(
+      this.americanToBritishTitlesMap
+    );
+  }
+
+  _toTitleCaseMap(obj) {
+    const result = {};
+    for (const key in obj) {
+      const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+      const capitalizedValue =
+        obj[key].charAt(0).toUpperCase() + obj[key].slice(1);
+      result[key] = obj[key];
+      result[capitalizedKey] = capitalizedValue;
+    }
+    return result;
+  }
 
   _reverseMap(obj) {
     const result = {};
