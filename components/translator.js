@@ -66,7 +66,7 @@ class Translator {
     for (const [americanTitle, britishTitle] of Object.entries(
       this.americanToBritishTitlesMap
     )) {
-      const regex = new RegExp(`\\b${americanTitle}\\b`, 'gi');
+      const regex = new RegExp(`\\b${americanTitle}`, 'gi');
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${britishTitle}</span>`
@@ -109,7 +109,7 @@ class Translator {
     for (const [britishTitle, americanTitle] of Object.entries(
       this.britishToAmericanTitlesMap
     )) {
-      const regex = new RegExp(`\\b${britishTitle}\\b`, 'gi');
+      const regex = new RegExp(`\\b${britishTitle}`, 'gi');
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${americanTitle}</span>`
