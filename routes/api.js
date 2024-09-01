@@ -8,13 +8,13 @@ module.exports = function (app) {
   app.route('/api/translate').post((req, res) => {
     const { text, locale } = req.body;
 
-    if (text === undefined || text === null || text === '') {
+    if (text === '') {
       return res.json({
         error: 'No text to translate',
       });
     }
 
-    if (!locale) {
+    if (!locale || !text) {
       return res.json({
         error: 'Required field(s) missing',
       });
