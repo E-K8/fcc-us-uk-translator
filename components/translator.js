@@ -36,10 +36,15 @@ class Translator {
   translateToBritish(text) {
     let translatedText = text;
 
+    // Time format translation (American to British)
+    translatedText = translatedText.replace(
+      /(\d{1,2}):(\d{2})/g,
+      `<span class="highlight">$1.$2</span>`
+    );
+
     // Loop through the american-only dictionary and replace words
     for (const [americanWord, britishWord] of Object.entries(americanOnly)) {
       const regex = new RegExp(`\\b${americanWord}\\b`, 'gi'); // Match whole word
-
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${britishWord}</span>`
@@ -57,14 +62,14 @@ class Translator {
       );
     }
 
-    // American to British tltles
-    for (const [americanTitles, britishTitles] of Object.entries(
-      americanToBritishTitles
+    // American to British titles
+    for (const [americanTitle, britishTitle] of Object.entries(
+      this.americanToBritishTitlesMap
     )) {
-      const regex = new RegExp(`\\b${americanTitles}`, 'gi'); // Titles might not be whole words (e.g., Mr.);
+      const regex = new RegExp(`\\b${americanTitle}\\b`, 'gi');
       translatedText = translatedText.replace(
         regex,
-        `<span class="highlight">${britishTitles}</span>`
+        `<span class="highlight">${britishTitle}</span>`
       );
     }
 
@@ -74,10 +79,15 @@ class Translator {
   translateToAmerican(text) {
     let translatedText = text;
 
+    // Time format translation (British to American)
+    translatedText = translatedText.replace(
+      /(\d{1,2})\.(\d{2})/g,
+      `<span class="highlight">$1:$2</span>`
+    );
+
     // Loop through the british-only dictionary and replace words
     for (const [britishWord, americanWord] of Object.entries(britishOnly)) {
       const regex = new RegExp(`\\b${britishWord}\\b`, 'gi'); // Match whole word
-
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${americanWord}</span>`
@@ -97,14 +107,15 @@ class Translator {
 
     // British to American titles
     for (const [britishTitle, americanTitle] of Object.entries(
-      this._reverseMap(americanToBritishTitles)
+      this.britishToAmericanTitlesMap
     )) {
-      const regex = new RegExp(`\\b${britishTitle}`, 'gi');
+      const regex = new RegExp(`\\b${britishTitle}\\b`, 'gi');
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${americanTitle}</span>`
       );
     }
+
     return translatedText;
   }
 }
