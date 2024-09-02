@@ -109,11 +109,12 @@ class Translator {
     for (const [britishTitle, americanTitle] of Object.entries(
       this.britishToAmericanTitlesMap
     )) {
-      const regex = new RegExp(`\\b${britishTitle}`, 'gi');
-      translatedText = translatedText.replace(
-        regex,
-        `<span class="highlight">${americanTitle}</span>`
-      );
+      const regex = new RegExp(`\\b${britishTitle}(?!\\.)\\b`, 'gi');
+      translatedText = translatedText.replace(regex, (match) => {
+        // Preserve the original case of the first letter
+        const replacement = match.charAt(0) + americanTitle.slice(1);
+        return `<span class="highlight">${replacement}</span>`;
+      });
     }
 
     return translatedText;
