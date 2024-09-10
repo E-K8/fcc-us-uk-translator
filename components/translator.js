@@ -36,6 +36,29 @@ class Translator {
   translateToBritish(text) {
     let translatedText = text;
 
+    console.log('Translating text:', text); // Log the original text
+
+    // American to British titles (handling period and space)
+    for (const [americanTitle, britishTitle] of Object.entries(
+      this.americanToBritishTitlesMap
+    )) {
+      // Match titles followed by a period and then a space or end of string
+      const regex = new RegExp(`${americanTitle.replace('.', '\\.')}\\s`, 'gi');
+
+      console.log('Regex:', regex); // Log the regex being used
+
+      // Replace "Mr." with "Mr" (without dot), preserving the case, and highlight
+      translatedText = translatedText.replace(regex, (match) => {
+        // Adjust case of first letter to match original case
+        const replacement = `${
+          britishTitle.charAt(0).toUpperCase() + britishTitle.slice(1)
+        } `;
+        return `<span class="highlight">${replacement}</span>`;
+      });
+
+      console.log('Translated after title replacement:', translatedText); // Log the text after replacement
+    }
+
     // Time format translation (American to British)
     translatedText = translatedText.replace(
       /(\d{1,2}):(\d{2})/g,
@@ -59,17 +82,6 @@ class Translator {
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${britishSpelling}</span>`
-      );
-    }
-
-    // American to British titles
-    for (const [americanTitle, britishTitle] of Object.entries(
-      this.americanToBritishTitlesMap
-    )) {
-      const regex = new RegExp(`\\b${americanTitle}`, 'gi');
-      translatedText = translatedText.replace(
-        regex,
-        `<span class="highlight">${britishTitle}</span>`
       );
     }
 
