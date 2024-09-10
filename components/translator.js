@@ -36,15 +36,11 @@ class Translator {
   translateToBritish(text) {
     let translatedText = text;
 
-    // Before any replacements
-    console.log('Original Text:', translatedText);
-
     // Time format translation (American to British)
     translatedText = translatedText.replace(
       /(\d{1,2}):(\d{2})/g,
       `<span class="highlight">$1.$2</span>`
     );
-    console.log('After time format translation:', translatedText);
 
     // Loop through the american-only dictionary and replace words
     for (const [americanWord, britishWord] of Object.entries(americanOnly)) {
@@ -52,10 +48,6 @@ class Translator {
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${britishWord}</span>`
-      );
-      console.log(
-        `After replacing ${americanWord} with ${britishWord}:`,
-        translatedText
       );
     }
 
@@ -68,27 +60,16 @@ class Translator {
         regex,
         `<span class="highlight">${britishSpelling}</span>`
       );
-      console.log(
-        `After replacing ${americanSpelling} with ${britishSpelling}:`,
-        translatedText
-      );
     }
 
     // American to British titles
     for (const [americanTitle, britishTitle] of Object.entries(
       this.americanToBritishTitlesMap
     )) {
-      const regex = new RegExp(
-        `\\b${americanTitle.replace('.', '\\.')}\\b`,
-        'gi'
-      );
+      const regex = new RegExp(`\\b${americanTitle}`, 'gi');
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${britishTitle}</span>`
-      );
-      console.log(
-        `After replacing ${americanTitle} with ${britishTitle}:`,
-        translatedText
       );
     }
 
