@@ -36,6 +36,24 @@ class Translator {
   translateToBritish(text) {
     let translatedText = text;
 
+    // American to British titles (with space, highlight, and removing the dot)
+    for (const [americanTitle, britishTitle] of Object.entries(
+      this.americanToBritishTitlesMap
+    )) {
+      // Match titles followed by a period and a space or a word boundary
+      const regex = new RegExp(
+        `\\b${americanTitle.replace('.', '\\.')}\\b`,
+        'gi'
+      );
+
+      // Replace "Mr." with "Mr " (no dot) and add highlighting
+      translatedText = translatedText.replace(regex, (match) => {
+        // Remove the period and wrap the title in a span for highlighting
+        const withoutPeriod = match.replace('.', '');
+        return `<span class="highlight">${withoutPeriod}</span>`;
+      });
+    }
+
     // Time format translation (American to British)
     translatedText = translatedText.replace(
       /(\d{1,2}):(\d{2})/g,
@@ -59,17 +77,6 @@ class Translator {
       translatedText = translatedText.replace(
         regex,
         `<span class="highlight">${britishSpelling}</span>`
-      );
-    }
-
-    // American to British titles
-    for (const [americanTitle, britishTitle] of Object.entries(
-      this.americanToBritishTitlesMap
-    )) {
-      const regex = new RegExp(`\\b${americanTitle}`, 'gi');
-      translatedText = translatedText.replace(
-        regex,
-        `<span class="highlight">${britishTitle}</span>`
       );
     }
 

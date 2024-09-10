@@ -8,6 +8,9 @@ module.exports = function (app) {
   app.route('/api/translate').post((req, res) => {
     const { text, locale } = req.body;
 
+    console.log('Received text:', text); // <-- Log input text
+    console.log('Locale:', locale); // <-- Log locale
+
     if (text === '') {
       return res.json({
         error: 'No text to translate',
@@ -30,6 +33,8 @@ module.exports = function (app) {
         error: 'Invalid value for locale field',
       });
     }
+
+    console.log('Translation result:', translation); // <-- Log the translation result
 
     if (translation === text) {
       return res.json({
