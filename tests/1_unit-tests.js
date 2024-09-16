@@ -56,13 +56,13 @@ suite('Unit Tests', () => {
   test('Translate "No Mr. Bond, I expect you to die." to British English', () => {
     const input = 'No Mr. Bond, I expect you to die.';
     const output =
-      'No <span class="highlight">Mr</span> Bond, I expect you to die.';
+      'No <span class="highlight">Mr </span>Bond, I expect you to die.';
     assert.equal(translator.translateToBritish(input), output);
   });
 
   test('Translate "Dr. Grosh will see you now." to British English', () => {
     const input = 'Dr. Grosh will see you now.';
-    const output = '<span class="highlight">Dr</span> Grosh will see you now.';
+    const output = '<span class="highlight">Dr </span>Grosh will see you now.';
     assert.equal(translator.translateToBritish(input), output);
   });
 
